@@ -1,0 +1,105 @@
+<style>
+    .fix-w {
+        position: fixed;
+        right: 0;
+        bottom:0px;
+        width:40px;
+        z-index: 11;
+    }
+
+    .fix-btn {
+        background-color: ((theme));
+        width:40px;
+        height:40px;
+        margin-bottom: 3px;
+        cursor: pointer;
+        border-radius: 3px;
+        color:#fff;
+        font-size: 31px;
+        text-align: center;
+        line-height: 40px;
+    }
+    .fix-btn:hover{
+        background-color: ((themeLight));
+    }
+    @media screen and (max-width: 600px) {
+        .fix-w{
+            /* bottom:40px; */
+        }
+    }
+</style>
+<div class='fix-w' jstyle='right:{{$.right}}+"px";bottom:{{$.bottom}}+"px"'>
+    <div class='fix-btn' title='留言反馈' jon='toMesBoard'>
+        <i class="j-icon icon-edit"></i>
+    </div>
+    <div jshow='showTop' class='fix-btn' title='返回顶部' jon='toTop'>
+        <i class="j-icon icon-arrow-up"></i>
+    </div>
+    <div jshow='showHome' class='fix-btn' title='返回主页' jon='toHome'>
+        <i class="j-icon icon-home"></i>
+    </div>
+</div>
+<script>
+    JET({
+        beforeunmount:function(){
+            Jet.root.removeResize(this.resize)
+        },
+        onmounted: function () {
+            var _this=this;
+
+            this.checkSize()
+            this.resize=function(){
+                _this.checkSize(this.resize)
+            }
+            if(Jet.root.isMobile()){
+                this.right=5
+            }
+            if(Jet.router.url==='/'){
+                if(Jet.root.isMobile()){
+                    this.bottom=40;
+                }
+                this.showTop=true;
+            }else{
+                this.showHome=true;
+            }
+            Jet.root.attachResize(this.resize)
+        },
+        beforeunmount:function(){
+            window.onresize=null
+        },
+        static: {
+            width: 40,
+        },
+        data: {
+            right: 10,
+            bottom:0,
+            showTop:false,
+            showHome:false,
+        },
+        func: {
+            checkSize:function(){
+                if (this.$.width() > Jet.VAR.maxWidth + this.$data.width*2) {
+                    this.right = (this.$.width() - Jet.VAR.maxWidth)/2 - this.$data.width;
+                }else{
+                    this.right=10
+                }
+            },
+            toTop: function () {
+                Jet.$.scrollTo(0)
+            },
+            toHome:function(){
+                if(Jet.router.url!=='/'){
+                    Jet.router.route('/')
+                }else{
+                    JUI.msg.warn('当前已是主页')
+                }
+            },
+            toMesBoard:function(){
+                JUI.confirm({
+                    title:"留言反馈",
+                    text:'留言反馈请发邮件至 : me@yingshike.com',
+                })
+            }
+        }
+    })
+</script>

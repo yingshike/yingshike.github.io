@@ -1,0 +1,235 @@
+<style src='movie.css'></style>
+<style>
+    #statusText,.info-text{
+        color: #444;
+        font-size: 16px;
+        text-align: center;
+        padding: 5px 0;
+        padding-bottom: 10px;
+    }
+    .info-text{
+        padding: 3px 0 0 0;
+    }
+    #statusText .j-icon{
+        font-size: 18px;
+        position: relative;
+        top: 2px;
+        left: 5px;
+    }
+    .wechat{
+        width:200px;
+    }
+    .code{
+        font-size: 20px;
+    }
+    .link{
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    .link:hover{
+        color: rgb(68, 68, 255);
+    }
+</style>
+<style scoped=false>
+    body{
+        padding-bottom:44px
+    }
+</style>
+<div class='info-text'>-- 共<span j='total'></span>条结果 --</div>
+<div j='list' class='movie-w clearfix'>
+    <div j='$each' class='movie-item' jon='play'>
+        <div class='movie-image' jstyle="background-image:{{'url('+$.image+')'}}">
+        </div>
+        <div class='movie-info' jattr='title:{{$.title}}'>
+            <div class='over-e movie-title' j='title'></div>
+            <div class='over-e movie-date' j='pubDateTime'></div>
+        </div>
+        <div class='movie-tag'>
+            <div class='movie-angle'></div>
+            <div class='movie-type' j='movieType'>this.getType($)</div>
+        </div>
+        <div class='movie-index' j='$index'>$+1</div>
+        <div class='play-btn'>
+            <i class="j-icon icon-play-circle"></i>
+        </div>
+        <div class='play-online' jshow='{{$.online}}!==undefined'>
+            在线
+        </div>
+    </div>
+</div>
+<div class='j-dialog t-center' dialog-title='获取资源' jui-bind='videoDialog'>
+    <div j="video">
+        <div><span j='title'></span> <span class='link' jon='showDetail'>详细介绍</span> </div>
+        <div class='bold'>资源码：<span class='theme-color code' j='code'>$.toLowerCase()</span></div>
+        <div class='bold'>扫描或长按识别下方二维码，关注影视客公众号回复 <span class='theme-color code' j='code'>$.toLowerCase()</span> 即可免费获取资源</div>
+        <div>绝对真实有效，童叟无欺</div>
+        <div>
+            <img class='wechat' src="wechat.jpg" alt="">
+        </div>
+        <div jshow='hasOnline' j='online' jfor-inline>
+            <button class='j-btn s' j='text' jon='toOnline' jattr='data-index:{{$index}}' icon="play-circle"></button>
+        </div>
+    </div>
+</div>
+<div class='j-dialog' dialog-title='影视详情' jui-bind='detailDialog'>
+    <div j='video' class='pm'>
+        <div class='movie-image detail' jon='showImage' jstyle="background-image:'url('+{{$.image}}+')'"></div>
+        <div><span class='bold'>名称: </span><span j='title'></span></div>
+        <div><span class='bold'>类型: </span><span j='movieType'>this.getType2($)</span>；<span j='areaType'></span></div>
+        <div jshow='{{$.daoyan}}!==""'><span class='bold'>导演: </span><span j='daoyan'></span></div>
+        <div jshow='{{$.zhuyan}}!==""'><span class='bold'>主演: </span><span j='zhuyan'></span></div>
+        <div jshow='{{$.leixing}}!==""'><span class='bold'>类型: </span><span j='leixing'></span></div>
+        <div jshow='{{$.diqu}}!==""'><span class='bold'>地区: </span><span j='diqu'></span></div>
+        <div jshow='{{$.yuyan}}!==""'><span class='bold'>语言: </span><span j='yuyan'></span></div>
+        <div jshow='{{$.date}}!==""'><span class='bold'>日期: </span><span j='date'></span></div>
+        <div><span class='bold'>简介: </span><span j='des' jhtml></span></div>
+    </div>
+</div>
+<div class='j-dialog full' dialog-title='图片详情' jui-bind='showImageBool'>
+    <div class='movie-image detail-full' jstyle="background-image:'url('+{{$.image}}+')'"></div>
+</div>
+<div jload='@fixBtn'></div>
+<div jload='@copy'></div>
+<div id='statusText' j='status' jon='loadData' jhtml></div>
+<script>
+    new Jet({
+        name: 'index',
+        data: {
+            size: 20,
+            index: 0,
+            total: 0,
+            page: 0,
+            list: [],
+            image:'',
+            video:{
+                "id": 0,
+                "pubDateTime": "",
+                "movieType": 1,
+                "areaType": "",
+                "title": "",
+                "image": "",
+                "daoyan": "",
+                "zhuyan": "",
+                "leixing": "",
+                "diqu": "",
+                "yuyan": "",
+                "shoubo": "",
+                "des": "",
+                "date": "",
+                "code": "",
+                online:[{
+                    'text':''
+                }],
+                hasOnline:false
+            },
+            videoDialog:false,
+            detailDialog:false,
+            showImageBool:false,
+            status:'加载更多<i class="j-icon icon-spin icon-spinner-indicator"></i>',
+        },
+        onmounted: function () {
+            // setTimeout(function(){Jet.$.cls('play-btn').removeClass('hide')},0)
+            if (this.$.width() < 600) {
+                this.size = 10;
+            }
+            if(Jet.root.fromSearch){
+                this.loadAllData();
+            }else{
+                this.query();
+            }
+            var _this=this;
+            var flag=false;
+            window.onscroll=function(){
+                if(!flag){
+                    var scrollTop=document.body.scrollTop||document.documentElement.scrollTop;
+                    if(Jet.$.height()+scrollTop>=document.body.hei()-5){//36是status的高度
+                        _this.loadData();
+                        setTimeout(function(){
+                            flag=false;
+                        },1000)
+                    }
+                }
+            }
+        },
+        beforeunmount:function(){
+            window.onscroll=null;
+        },
+        func: {
+            query:function(){
+                var a=Jet.root.searchArr
+                if(Jet.root.combine){
+                    this.db.combineQuery(Jet.root.searchObj)
+                }else{
+                    this.db.query(a[0],a[1])
+                }
+                this.initPage();
+                Jet.root.clearSearch();
+            },
+            showImage:function(opt){
+                this.image=opt.data.image;
+                this.showImageBool=true;
+            },
+            loadAllData: function (){
+                this.db.reset();
+                this.initPage();
+            },
+            initPage:function(){
+                this.list=[];
+                this.index=0;
+                this.total = this.db.count();
+                this.page = Math.ceil(this.total / this.size);
+                this.loadData();
+            },
+            play:function(opt){
+                if(!opt.data.code){
+                    Jet.router.route.open('/play?id='+opt.data.id)
+                }else{
+                    this.video=opt.data;
+                    for(var k in this.video){
+                        if(typeof this.video[k]=='string'){
+                            this.video[k]=opt.data[k]||""
+                        }
+                    }
+                    this.video.hasOnline=(opt.data.online!==undefined)
+                    this.videoDialog=true;
+                }
+            },
+            toOnline:function(opt){
+                var index=opt.ele.attr('data-index');
+                Jet.router.route.open('/play?id='+this.video.id+'&index='+index)
+            },
+            getType: function (s) {
+                return this.db.getTypeSimple(s);
+            },
+            getType2: function (s) {
+                return this.db.getType(s);
+            },
+            loadData:function(){
+                if(this.total===0){
+                    this.status='<div style="margin-top:150px">这里空空如也</div>'
+                    return
+                }
+                if(this.index<this.page){
+                    var d=this.db.get(this.index, this.size);
+                    d.forEach(function(item){
+                        if(!item.image||item.image==''){
+                            item.image=Jet.res.getSrc('def-cover.png','image')
+                        }
+                    })
+                    this.list.$pushArray(d)
+                    this.index++;
+                    if(this.index>=this.page){
+                        this.status='-- 我是有底线的 --'
+                    }else{
+                        this.status='正在加载更多<i class="j-icon icon-spin icon-spinner-indicator"></i>'
+                    }
+                }
+            },
+            showDetail:function(){
+                this.detailDialog=true
+            }
+        }
+    })
+</script>

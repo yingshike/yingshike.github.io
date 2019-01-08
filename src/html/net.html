@@ -1,0 +1,42 @@
+<style>
+    #frame{
+        position: fixed;
+        top:60px;
+        left:0;
+    }
+</style>
+<iframe id='frame' jstyle='width:{{$.width}}+"px";height:{{$.height}}+"px"' src="" frameborder="0"></iframe>
+<div jload='@fixBtn'></div>
+<script>
+    JET({
+        beforeunmount:function(){
+            Jet.root.removeResize(this.resize)
+        },
+        onmounted:function(){
+            this.frame=this.$.id('frame');
+            this.checkSize()
+            this.resize=function(){
+                _this.checkSize(this.resize)
+            }
+            Jet.root.attachResize(this.resize)
+            var p=this.$.urlParam();
+            if(p!==null){
+                this.frame.src='https://so.iqiyi.com/so/q_'+p.s
+            }else{
+                this.frame.src='https://so.iqiyi.com/'
+            }
+        },
+        data:{
+            width:1000,
+            height:1000,
+        },
+        func:{
+            checkSize:function(){
+                if(Jet.router.url=='/net'){
+                    this.width = this.$.width();
+                    this.height = this.$.height() - Jet.VAR.headHeight;
+                }
+            }
+        }
+    })
+</script>

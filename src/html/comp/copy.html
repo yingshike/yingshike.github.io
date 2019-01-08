@@ -1,0 +1,38 @@
+<style>
+    .wrapper{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+        background-color: rgba(0,0,0,.5);
+    }
+    .link{
+        color: #ddd;
+        cursor: pointer;
+    }
+    .link:hover{
+        color: #fff;
+    }
+    .info2{
+        display: none;
+    }
+    @media screen and (max-width: 600px) {
+        .info{
+            display: none;
+        }
+        .info2{
+            display: block;
+        }
+    }
+</style>
+<div class='wrapper'>
+    <div> <span class='link' jon='click:Jet.$.open("https://www.theajack.com")'>theajack.com</span> &copy; 2019 | me@theajack.com</div>
+    <div class='info'>本网站为非盈利性网站，所有资源来自网络，如无意中侵犯了您的权益,请发邮件至me@theajack.com，立即清除相关链接</div>
+    <div class='info2'>本网站非盈利,资源来自网络,如侵权,请邮件通知</div>
+</div>
+<script>
+    JET({})
+</script>

@@ -1,0 +1,47 @@
+<style>
+    .wechat{
+        width:250px;
+    }
+    @media screen and (max-width: 620px) {
+        .wechat{
+            width:200px;
+        }
+        .tl{
+            font-size: 18px;
+        }
+        .txl{
+            font-size: 20px;
+            margin: 5px!important;
+        }
+    }
+    
+</style>
+<div j=info>
+    <div>
+        <img class='wechat ml' jattr='src:{{$.wechat}}' alt="">
+    </div>
+    <div class='tl mxl-b'>
+        个人微信公众号
+    </div>
+    <div class='txl ml'>
+        版本：<span j=version></span>
+    </div>
+    <div class='txl ml'>
+        作者： <span j=author></span>
+    </div>
+    <div class='txl ml'>
+        起始时间：<span j=date></span>
+    </div>
+</div>
+<script>
+new Jet({
+    data:{
+        info:{
+            wechat:'wechat.png',
+            author:'theajack',
+            version:'1.x',
+            date:'2017年'
+        }
+    }
+})
+</script>

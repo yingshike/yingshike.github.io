@@ -1,0 +1,179 @@
+::-webkit-scrollbar {
+  width:10px;
+}
+::-webkit-scrollbar-button    {
+  display: none;
+}
+::-webkit-scrollbar-track     {
+  display: none;
+}
+::-webkit-scrollbar-track-piece {
+  background-color:rgba(100,100,100,.2);
+}
+::-webkit-scrollbar-thumb{
+  background-color:#bbb;
+  border-radius:10px;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover{
+  background-color:#aaa;
+}
+
+
+/* 修改jui */
+.j-btn{
+  background-color: #ff5b01;
+}
+.j-btn:hover{
+  background-color: #ff8543;
+}
+.j-btn:active{
+  background-color: #ff9d68;
+}
+/* 修改jui end */
+
+#bgCover {
+    z-index: -1;
+    background-color: rgba(230, 230, 235, 0.4);
+}
+
+#bgCanvas, #bgCover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:-1;
+}
+
+.main-width{
+  max-width: 1200px;
+  position: relative;
+  margin: 0 auto;
+}
+
+#head{
+  height:60px;
+  background-color: rgba(0,0,0,.8);
+  width:100%;
+  position: fixed;
+  top:0;
+  left:0;
+  color:#fff;
+  padding: 5px;
+  z-index:20;
+}
+.out{
+  padding-top: 60px;
+}
+.head-search{
+  text-align: center;
+  position: relative;
+}
+.head-search .j-input-w{
+  border-radius: 24px;
+  overflow: hidden;
+  border:1px solid #ff5b01;
+  margin-top: 4px;
+}
+.head-search .j-icon-w{
+  background-color: #ff5b01;
+  color: #fff;
+  font-size: 25px;
+  border: none;
+  height: 100%;
+  top: 0;
+  right: 0!important;
+  padding-right: 13px;
+  cursor: pointer;
+  transition: background-color .3s ease;
+  -webkit-transition: background-color .3s ease;
+  -o-transition: background-color .3s ease;
+  -moz-transition: background-color .3s ease;
+  -ms-transition: background-color .3s ease;
+}
+.head-search .j-icon-w:hover{
+  background-color: #ff8340;
+}
+.head-search .j-input{
+  padding-right: 36px;
+  border-width: 0;
+  padding-left: 13px;
+  padding-right: 135px;
+  width: 400px!important;
+  font-size: 18px;
+  color: #ff5b01;
+}
+.theme-color{
+  color: #ff5b01;
+}
+.head-search .j-input:focus + .j-icon-w {
+  color: #ddd;
+}
+.head-logo{
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+}
+.head-logo img{
+  height:50px;
+}
+.head-title-w{
+  display: inline-block;
+  position: relative;
+  top: -6px;
+}
+.head-title-main{
+  font-size: 26px;
+  font-weight: bold;
+  color: #ff5b01;
+}
+.head-navi{
+  position: absolute;
+}
+.APP_Loading{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+  color: #888;
+}
+.over-e{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+@media screen and (max-width: 680px) {
+  .head-logo{
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .head-navi{
+    font-size: 12px;
+  }
+  .head-navi .j-icon{
+    font-size: 14px;
+  }
+  .head-search{
+    width: 80%;
+  }
+  .search-w{
+    /* width: 100%; */
+  }
+  .m-hide{
+    display: none;
+  }
+  .head-search .j-input{
+    width:100%!important;
+    height: 40px;
+    line-height: 15px;
+    margin: 0;
+    font-size: 14px;
+    padding-left: 10px;
+  }
+  .info-text{
+    font-size: 14px;
+  }
+}
+

@@ -1,0 +1,105 @@
+<style>
+    #frame {
+        position: fixed;
+        top: 60px;
+        left: 0;
+    }
+    #frame.online{
+        position: relative;
+        top:0;
+    }
+    .top-cover,.bottom-cover{
+        background-color: #fff;
+        position: absolute;
+        height:155px;
+    }
+    .top-cover{
+        top:0;
+    }
+    .bottom-cover{
+        height:220px;
+        bottom:0;
+    }
+    .top-btns{
+        position: fixed;
+        top:60px;
+        width:100%;
+        left:0;
+        text-align: center;
+    }
+</style>
+<div class='APP_Loading'><i class="j-icon icon-spinner-indicator icon-spin"></i></div>
+<!-- <div class='relative'>
+    <div class='top-cover'></div>
+    <iframe id='frame' class='online' jstyle='width:{{$.width}}+"px";height:{{$.height}}+"px"' src="" frameborder="0"></iframe>
+    <div class='bottom-cover'></div>
+</div> -->
+<iframe id='frame' jstyle='width:{{$.width}}+"px";height:{{$.height}}+"px"' src="" frameborder="0"></iframe>
+
+<div class='top-btns'>
+    <button class='j-btn' icon="ie" jon='toWebsite'>去官网观看</button>
+    <button class='j-btn' icon="link" jon='toBack'>备用地址</button>
+</div>
+<div jload='@fixBtn'></div>
+<!-- <div jload='@fixBtn'></div> -->
+<script>
+    
+    JET({
+        beforeunmount:function(){
+            Jet.root.removeResize(this.resize)
+        },
+        onmounted: function () {
+            var _this=this
+            this.frame = this.$.id('frame');
+            this.checkSize()
+            this.resize=function(){
+                _this.checkSize(this.resize)
+            }
+            Jet.root.attachResize(this.resize)
+            var p = this.$.urlParam();
+            if (p !== null) {
+                this.video = this.db.getById(parseInt(p.id));
+                if(this.video.online){
+                    this.index=p.index||0;
+                    this.frame.src = this.video.online[this.index].link;
+                    if(this.video.online.length>1){
+                        this.showChoose=true;
+                        this.list=this.video.online
+                    }
+                }else{
+                    this.frame.src = 'https://so.iqiyi.com/so/q_' + this.video.title
+                }
+            } else {
+                this.showSo();
+            }
+        },
+        data: {
+            width: 1000,
+            height: 1000,
+            showChoose:false,
+            list:[],
+            index:0,
+            video:{
+
+            }
+        },
+        func:{
+            toWebsite:function(){
+                Jet.$.jump(this.video.online[this.index].link)
+            },
+            toBack:function(){
+                Jet.$.jump(this.video.online[this.index].url)
+            },
+            showSo:function(){
+                Jet.root.showSearch=false;
+                this.frame.src = 'https://so.iqiyi.com/'
+            },
+            checkSize:function(){
+                if(Jet.router.url=='/play'){
+                    this.width = this.$.width();
+                    this.height = this.$.height() - Jet.VAR.headHeight;
+                }
+            }
+        }
+    })
+</script>

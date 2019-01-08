@@ -1,0 +1,168 @@
+<style>
+  .head-search .j-select-vw{
+    text-align: left;
+    padding-left: 3px;
+    font-size: 12px;
+  }
+  .search-w{
+    display: inline-block;
+    position: relative;
+  }
+  .search-w .j-select{
+    width: 65px;
+    position: absolute;
+    top: 7px;
+    right: 68px;
+    border: none;
+    background-color: transparent;
+    color: #ff5b01;
+  }
+  .j-option-w{
+    max-height: 280px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .clear-search{
+    color: #ff5b01;
+    position: absolute;
+    font-size: 20px;
+    top: 15px;
+    right: 53px;
+    cursor: pointer;
+  }
+  .clear-search:hover{
+    color: #fd8e52;
+  }
+  .head-navi{
+    position: absolute;
+    right: 0;
+    color: #ff5b01;
+    font-size: 16px;
+    cursor: pointer;
+    top: 12px;
+  }
+  .head-navi:hover{
+    color: #fd8e52;
+  }
+  .top-btns{
+      position: fixed;
+      top:65px;
+      width:100%;
+      left:0;
+      text-align: center;    
+      top: 60px;
+      background-color: rgba(0,0,0,.7);
+      padding-bottom: 3px;
+  }
+  .title{
+    color: #ff5b01;
+    font-weight: bold;
+    font-size: 18px;
+    /* line-height: 18px; */
+    padding: 5px 0;
+  }
+  .split{
+    border-top:1px dashed #ff5b01;
+    margin-top: 10px;
+  }
+  #shang{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-image: url(/src/image/shang.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: none;
+  }
+</style>
+<div>
+  <div id='head'>
+    <div class='main-width'>
+      <div class='head-logo' jon='toIndex'>
+        <img src="logo.png" alt="">
+        <div class='head-title-w'>
+          <div class='head-title-main'>影视客</div>
+          <div class='head-title-sub'>网罗最新影视</div>
+        </div>
+      </div>
+      <div class='head-search' jshow='showSearch'>
+          <div class='search-w'>
+            <div class="j-input-w xl">
+              <input type="text" j='searchText' jon='keydown:checkKeyDown' class="j-input xl j-icon-right" placeholder="搜索本站或全网">
+              <div class="j-icon-w" jon='search'>
+                <i class="j-icon icon-search" title='搜索'></i>
+              </div>
+            </div>
+            <div class='j-select' jui-bind='type' width='65px'>
+              <div class='j-option' value='0'>按名称</div>
+              <div class='j-option' value='1'>按导演</div>
+              <div class='j-option' value='2'>按主演</div>
+              <div class='j-option' value='3'>按类型</div>
+              <div class='j-option' value='4'>按地区</div>
+              <div class='j-option' value='5'>按语言</div>
+              <div class='j-option' value='6'>按简介</div>
+              <div class='j-option' value='7'>按时间</div>
+              <div class='j-option' value='8'>搜全网</div>
+            </div>
+            <i class="j-icon icon-times clear-search" title='清除搜索' jon='resetQuery'></i>
+          </div>
+      </div>
+      <div class='head-navi' jon='toggleDown'>
+        更多<span class='m-hide'>选择</span>
+        <i jshow='{{!$.down}}' class="j-icon icon-caret-down"></i>
+        <i jshow='down' class="j-icon icon-caret-up"></i>
+      </div>
+    </div>
+    <!-- j='btns'  -->
+    <div jshow='down' jdom='down' class='hide top-btns'>
+      <div class='main-width'>
+        <div class='title'>
+          联合搜索
+        </div>
+        <div j='searchObj'>
+          <input type="text" class='j-input s' j='name' placeholder="名称">
+          <input type="text" class='j-input s' j='director' placeholder="导演">
+          <input type="text" class='j-input s' j='actor' placeholder="主演">
+          <input type="text" class='j-input s' j='type' placeholder="类型">
+          <input type="text" class='j-input s' j='area' placeholder="地区">
+          <button class='j-btn s' icon='search' jon='searchCombine'>搜索</button>
+        </div>
+        <div class='title split'>
+          类型选择
+        </div>
+        <div>
+          <button class='j-btn s' icon="film" jon='searchByBtn'>电影</button>
+          <button class='j-btn s' icon="play-sign" jon='searchByBtn'>电视剧</button>
+          <button class='j-btn s' icon="paint-brush" jon='searchByBtn'>动漫</button>
+          <button class='j-btn s' icon="chat-line" jon='searchByBtn'>综艺</button>
+          <button class='j-btn s' icon="ellipsis-h" jon='searchByBtn'>其他</button>
+        </div>
+        <div j='typeArr' jfor-inline>
+          <button class='j-btn s' jon='searchByBtn' j='$value'></button>
+        </div>
+        <div j='areaArr' jfor-inline>
+          <button class='j-btn s' jon='searchByBtn' j='$value'></button>
+        </div>
+        <div class='title split'>
+          打赏与合作
+        </div>
+        <div class='ms-b'>
+          <button class='j-btn s' jon='showShang'>打赏(维护不易，谢谢支持)</button>
+          <button class='j-btn s' jon='co'>广告合作</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div jout jdom='out' class='out main-width'>
+    <div class='APP_Loading'><i class="j-icon icon-spinner-indicator icon-spin"></i></div>
+  </div>
+</div>
+
+<div jstyle='display:{{$.shang}}?"block":"none"' id="shang" jon='this.shang=false'>
+</div>
+<script src='root.js' jpath='false'></script>
