@@ -73,12 +73,24 @@
     z-index: 100;
     top: 0;
     left: 0;
-    background-image: url(/src/image/shang.png);
+    /* background-image: url(/src/image/shang.png); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     display: none;
+    text-align: center;
   }
+  #shang img{
+    width: 600px;
+    margin-top: 50px;
+  }
+  @media screen and (max-width: 600px) {
+    #shang img{
+      width: 300px;
+    margin-top: 150px;
+    }
+  }
+
 </style>
 <div>
   <div id='head'>
@@ -164,5 +176,6 @@
 </div>
 
 <div jstyle='display:{{$.shang}}?"block":"none"' id="shang" jon='this.shang=false'>
+  <img src="/src/image/shang.png" alt="">
 </div>
 <script src='root.js' jpath='false'></script>

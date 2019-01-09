@@ -45,33 +45,12 @@
 <script>
     
     JET({
+        name:'play',
         beforeunmount:function(){
             Jet.root.removeResize(this.resize)
         },
         onmounted: function () {
-            var _this=this
-            this.frame = this.$.id('frame');
-            this.checkSize()
-            this.resize=function(){
-                _this.checkSize(this.resize)
-            }
-            Jet.root.attachResize(this.resize)
-            var p = this.$.urlParam();
-            if (p !== null) {
-                this.video = this.db.getById(parseInt(p.id));
-                if(this.video.online){
-                    this.index=p.index||0;
-                    this.frame.src = this.video.online[this.index].link;
-                    if(this.video.online.length>1){
-                        this.showChoose=true;
-                        this.list=this.video.online
-                    }
-                }else{
-                    this.frame.src = 'https://so.iqiyi.com/so/q_' + this.video.title
-                }
-            } else {
-                this.showSo();
-            }
+            this.init();
         },
         data: {
             width: 1000,
@@ -84,6 +63,31 @@
             }
         },
         func:{
+            init:function(){
+                var _this=this
+                this.frame = this.$.id('frame');
+                this.checkSize()
+                this.resize=function(){
+                    _this.checkSize(this.resize)
+                }
+                Jet.root.attachResize(this.resize)
+                var p = this.$.urlParam();
+                if (p !== null) {
+                    this.video = this.db.getById(parseInt(p.id));
+                    if(this.video.online){
+                        this.index=p.index||0;
+                        this.frame.src = this.video.online[this.index].link;
+                        if(this.video.online.length>1){
+                            this.showChoose=true;
+                            this.list=this.video.online
+                        }
+                    }else{
+                        this.frame.src = 'https://so.iqiyi.com/so/q_' + this.video.title
+                    }
+                } else {
+                    this.showSo();
+                }
+            },
             toWebsite:function(){
                 Jet.$.jump(this.video.online[this.index].link)
             },

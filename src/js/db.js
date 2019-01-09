@@ -1,4 +1,4 @@
-Jet.define('db', function () {
+Jet.define('db',['initData'], function (mod) {
     var type = ["电影", "电视剧", "动画动漫", "综艺其他", "其他"]
     var typeSimple = ["影", "剧", "漫", "综", "它"]
     var attr = {
@@ -25,7 +25,22 @@ Jet.define('db', function () {
         '官方网站': 'offical',
         '季数': 'season'
     }
-    var data = window.__yingshike_data;
+    var data = mod.initData.data;
+    JUI.msg({
+        text:'正在加载更多,请稍等...',
+        autoClose:false
+    })
+    Jet.import('data',function(mod){
+        data=mod.data.data
+        if(Jet.router.url==='/'){
+            if(Jet.root){
+                Jet.root.resetQuery();
+            }
+        }else if(Jet.router.url==='/play'){
+            Jet.comp.play.init();
+        }
+        JUI.msg.clear();
+    })
     var checkDateTime = function (s, isStart) {
         if (s !== '') {
             if (s.indexOf(' ') === -1) {
@@ -84,7 +99,7 @@ Jet.define('db', function () {
         betweenDate: function (d1, d2) {
             d1 = checkDateTime(d1, true)
             d2 = checkDateTime(d2, false)
-            let func = null
+            var func = null
             if (d1 == '') {
                 func = function (item) {
                     return item.pubDateTime <= d2;
@@ -102,7 +117,7 @@ Jet.define('db', function () {
             return tempData;
         },
         getById:function(id){
-            let d = data.filter(function(item){
+            var d = data.filter(function(item){
                 return item.id===id;
             })
             if(d.length==0){

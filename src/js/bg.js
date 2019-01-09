@@ -1,6 +1,5 @@
 /**
   author:theajack
-  www.theajack.com
 **/
 Jet.define('BG',function(){
   (function () {
