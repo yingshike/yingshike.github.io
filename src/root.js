@@ -1,6 +1,8 @@
 
 new Jet({
   beforeinitawait:function(next){
+    // __yingshike_data
+    // <script type="text/javascript" src="assets/js/jet.min.js"></script>
     this.$import('db',function(mod){
       Jet.prototype.db=mod.db;
       next();

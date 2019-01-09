@@ -138,6 +138,11 @@
   margin-top: -25px;
   color: #888;
 }
+
+.APP_Loading.text{
+  font-size: 15px;
+  margin-left: -80px;
+}
 .over-e{
   overflow:hidden;
   text-overflow:ellipsis;

@@ -1,4 +1,4 @@
-Jet.define('db', ['data'], function (mod) {
+Jet.define('db', function () {
     var type = ["电影", "电视剧", "动画动漫", "综艺其他", "其他"]
     var typeSimple = ["影", "剧", "漫", "综", "它"]
     var attr = {
@@ -25,7 +25,7 @@ Jet.define('db', ['data'], function (mod) {
         '官方网站': 'offical',
         '季数': 'season'
     }
-    var data = mod.data.data;
+    var data = window.__yingshike_data;
     var checkDateTime = function (s, isStart) {
         if (s !== '') {
             if (s.indexOf(' ') === -1) {
