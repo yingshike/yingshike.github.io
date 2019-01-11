@@ -191,7 +191,10 @@
         padding-bottom:44px
     }
 </style>
-<div class='info-text'>-- 共<span j='total'></span>条结果 --</div>
+<div jshow='showLoading' class='info-text'>
+    <i class="j-icon icon-spinner-indicator icon-spin"></i> 正在加载数据...
+</div>
+<div jshow='{{$.showLoading}}==false' class='info-text'>-- 共<span j='total'></span>条结果 --</div>
 <div j='list' class='movie-w clearfix'>
     <div j='$each' class='movie-item' jon='play'>
         <div class='movie-image' jstyle="background-image:{{'url('+$.image+')'}}">
@@ -249,7 +252,10 @@
 </div>
 <div jload='@fixBtn'></div>
 <div jload='@copy'></div>
-<div id='statusText' j='status' jon='loadData' jhtml></div>
+<div jshow='showLoading' class='info-text'>
+    <i class="j-icon icon-spinner-indicator icon-spin"></i> 正在加载数据...
+</div>
+<div jshow='{{$.showLoading}}==false' id='statusText' j='status' jon='loadData' jhtml></div>
 <script>
     new Jet({
         name: 'index',
@@ -260,6 +266,7 @@
             page: 0,
             list: [],
             image:'',
+            showLoading:true,
             video:{
                 "id": 0,
                 "pubDateTime": "",

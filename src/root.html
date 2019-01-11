@@ -79,6 +79,7 @@
     background-size: contain;
     display: none;
     text-align: center;
+    cursor: pointer;
   }
   .showW img{
     width: 600px;
@@ -186,7 +187,7 @@
 </div>
 
 <div jstyle='display:{{$.sp}}?"block":"none"' class="showW" jon='this.sp=false'>
-  <img src="/src/image/sp.jpg" alt="">
+  <img src="/src/image/sp.jpg" alt="" style='width: 400px;'>
   <div class='show-text'>请使用微信扫一扫或长按识别使用小程序</div>
 </div>
 <div jstyle='display:{{$.shang}}?"block":"none"' class="showW" jon='this.shang=false'>

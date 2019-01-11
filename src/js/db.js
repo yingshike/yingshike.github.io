@@ -26,20 +26,22 @@ Jet.define('db',['initData'], function (mod) {
         '季数': 'season'
     }
     var data = mod.initData.data;
-    JUI.msg({
-        text:'正在加载更多,请稍等...',
-        autoClose:false
-    })
+
     Jet.import('data',function(mod){
         data=mod.data.data
         if(Jet.router.url==='/'){
             if(Jet.root){
                 Jet.root.resetQuery();
             }
+            if(Jet.comp){
+                Jet.comp.index.showLoading=false;
+            }
+
         }else if(Jet.router.url==='/play'){
-            Jet.comp.play.init();
+            if(Jet.comp){
+                Jet.comp.play.init();
+            }
         }
-        JUI.msg.clear();
     })
     var checkDateTime = function (s, isStart) {
         if (s !== '') {
