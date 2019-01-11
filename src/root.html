@@ -41,7 +41,7 @@
     cursor: pointer;
     top: 12px;
   }
-  .head-navi:hover{
+  .head-navi .n-item:hover{
     color: #fd8e52;
   }
   .top-btns{
@@ -65,7 +65,7 @@
     border-top:1px dashed #ff5b01;
     margin-top: 10px;
   }
-  #shang{
+  .showW{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -80,14 +80,20 @@
     display: none;
     text-align: center;
   }
-  #shang img{
+  .showW img{
     width: 600px;
     margin-top: 50px;
   }
+  .show-text{
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 10px;
+  }
   @media screen and (max-width: 600px) {
-    #shang img{
+    .showW img{
       width: 300px;
-    margin-top: 150px;
+      margin-top: 150px;
     }
   }
 
@@ -124,10 +130,13 @@
             <i class="j-icon icon-times clear-search" title='清除搜索' jon='resetQuery'></i>
           </div>
       </div>
-      <div class='head-navi' jon='toggleDown'>
-        更多<span class='m-hide'>选择</span>
-        <i jshow='{{!$.down}}' class="j-icon icon-caret-down"></i>
-        <i jshow='down' class="j-icon icon-caret-up"></i>
+      <div class='head-navi'>
+        <span class='n-item m-hide ml-r' jon='showSp'>小程序 <i class="j-icon icon-wechat"></i></span>
+        <span class='n-item' jon='toggleDown'>
+            更多<span class='m-hide'>选择</span>
+            <i jshow='{{!$.down}}' class="j-icon icon-caret-down"></i>
+            <i jshow='down' class="j-icon icon-caret-up"></i>
+        </span>
       </div>
     </div>
     <!-- j='btns'  -->
@@ -161,9 +170,9 @@
           <button class='j-btn s' jon='searchByBtn' j='$value'></button>
         </div>
         <div class='title split'>
-          打赏与合作
         </div>
         <div class='ms-b'>
+          <button class='j-btn s' jon='showSp'>微信小程序</button>
           <button class='j-btn s' jon='showShang'>打赏(维护不易，谢谢支持)</button>
           <button class='j-btn s' jon='co'>广告合作</button>
         </div>
@@ -175,7 +184,11 @@
   </div>
 </div>
 
-<div jstyle='display:{{$.shang}}?"block":"none"' id="shang" jon='this.shang=false'>
+<div jstyle='display:{{$.sp}}?"block":"none"' class="showW" jon='this.sp=false'>
+  <img src="/src/image/sp.jpg" alt="">
+  <div class='show-text'>请使用微信扫一扫或长按识别使用小程序</div>
+</div>
+<div jstyle='display:{{$.shang}}?"block":"none"' class="showW" jon='this.shang=false'>
   <img src="/src/image/shang.png" alt="">
 </div>
 <script src='root.js' jpath='false'></script>

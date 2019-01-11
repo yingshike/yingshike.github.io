@@ -37,6 +37,7 @@ new Jet({
   },
   data:{
     shang:false,
+    sp:false,
     size:10,
     index:0,
     searchText:'',
@@ -71,6 +72,9 @@ new Jet({
   func:{
     showShang:function(){
       this.shang=true
+    },
+    showSp:function(){
+      this.sp=true
     },
     isMobile:function(){
       return (this.$.width()<600)

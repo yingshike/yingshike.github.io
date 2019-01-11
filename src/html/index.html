@@ -136,6 +136,14 @@
     background-size: contain
     }
 
+    .movie-rate{
+        color: #ff5a01;
+        position: absolute;
+        bottom: 45px;
+        right: 5px;
+        font-size: 24px;
+        font-weight: bold;
+    }
     @media screen and (max-width: 600px) {
     .movie-item{
         width: 48%;
@@ -161,6 +169,7 @@
         top: 2px;
         left: 5px;
     }
+    #statusText{cursor: pointer}
     .wechat{
         width:200px;
     }
@@ -194,6 +203,8 @@
         <div class='movie-tag'>
             <div class='movie-angle'></div>
             <div class='movie-type' j='movieType'>this.getType($)</div>
+        </div>
+        <div class='movie-rate' j='pingfen'>
         </div>
         <div class='movie-index' j='$index'>$+1</div>
         <div class='play-btn'>
@@ -229,6 +240,7 @@
         <div jshow='{{$.diqu}}!==""'><span class='bold'>地区: </span><span j='diqu'></span></div>
         <div jshow='{{$.yuyan}}!==""'><span class='bold'>语言: </span><span j='yuyan'></span></div>
         <div jshow='{{$.date}}!==""'><span class='bold'>日期: </span><span j='date'></span></div>
+        <div jshow='{{$.pingfen}}!==""'><span class='bold'>评分: </span><span j='pingfen'></span></div>
         <div><span class='bold'>简介: </span><span j='des' jhtml></span></div>
     </div>
 </div>
