@@ -1,4 +1,4 @@
-Jet.define('db',['initData'], function (mod) {
+Jet.define('db',['initData','mark'], function (mod) {
     var type = ["电影", "电视剧", "动画动漫", "综艺其他", "其他"]
     var typeSimple = ["影", "剧", "漫", "综", "它"]
     var attr = {
@@ -26,7 +26,7 @@ Jet.define('db',['initData'], function (mod) {
         '季数': 'season'
     }
     var data = mod.initData.data;
-
+    var mark=mod.mark.data;
     Jet.import('data',function(mod){
         data=mod.data.data
         if(Jet.router.url==='/'){
@@ -68,6 +68,10 @@ Jet.define('db',['initData'], function (mod) {
             size = size || 10
             var start = index * size;
             return tempData.slice(start, start + size)
+        },
+        loadMark:function(){
+            tempData=mark;
+            return tempData;
         },
         query: function (str,attr) {
             if(attr==='movieType'||attr==='id'){

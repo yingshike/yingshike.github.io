@@ -298,11 +298,17 @@
             if (this.$.width() < 600) {
                 this.size = 10;
             }
-            if(Jet.root.fromSearch){
-                this.loadAllData();
-            }else{
-                this.query();
-            }
+            // var d=Jet.router.params;
+            // if(d&&d.d=='m'){
+            //     debugger
+            //     this.loadMarkData();
+            // }else{
+                if(Jet.root.fromSearch){
+                    this.loadAllData();
+                }else{
+                    this.query();
+                }
+            // }
             var _this=this;
             var flag=false;
             window.onscroll=function(){
@@ -337,6 +343,11 @@
             },
             loadAllData: function (){
                 this.db.reset();
+                this.initPage();
+                Jet.root.clearSearch();
+            },
+            loadMarkData:function(){
+                this.db.loadMark()
                 this.initPage();
             },
             initPage:function(){

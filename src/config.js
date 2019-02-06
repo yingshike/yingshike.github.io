@@ -29,7 +29,8 @@ Jet.use(
             '/index':'/index',
             '/play':'/play',
             '/net':'/net',
-            '/search':'/search'
+            '/search':'/search',
+            // '/mark':'/mark'
           }
         });
     }
